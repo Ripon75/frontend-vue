@@ -1,19 +1,67 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/frontend/HomeView'
+import ContactView from '../views/frontend/ContactView'
+import CartView from '../views/frontend/CartView'
+import CheckoutView from '../views/frontend/CheckoutView'
+import ShopView from '../views/frontend/ShopView'
+import ProductDetailsView from '../views/frontend/ProductDetails'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta: {
+      page: 'home',
+      layout: 'frontend'
+    }
   },
   {
-    path: '/about',
+    path: '/contact',
+    name: 'contact',
+    component: ContactView,
+    meta: {
+      layout: 'frontend'
+    }
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: CartView,
+    meta: {
+      layout: 'frontend'
+    }
+  },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: CheckoutView,
+    meta: {
+      layout: 'frontend'
+    }
+  },
+  {
+    path: '/shop',
+    name: 'shop',
+    component: ShopView,
+    meta: {
+      layout: 'frontend'
+    }
+  },
+  {
+    path: '/details',
+    name: 'details',
+    component: ProductDetailsView,
+    meta: {
+      layout: 'frontend'
+    }
+  },
+  {
+    path: '/admin',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    meta: {
+      layout: 'admin',
+    }
   }
 ]
 

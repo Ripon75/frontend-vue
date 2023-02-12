@@ -5,8 +5,9 @@
 
         <!-- Navbar for home page Start -->
         <home-navbar v-if="page === 'home'"></home-navbar>
+        <home-navbar v-else display="none" show="show"></home-navbar>
         <!-- Navbar for others page Start -->
-        <common-nav v-else></common-nav>
+        <!-- <common-nav v-else></common-nav> -->
         <!-- Navbar End -->
 
         <router-view> </router-view>
@@ -17,12 +18,12 @@
 </template>
 <script>
 import TopBar from "../components/frontend/TopBar.vue"
-import CommonNav from '../components/frontend/CommonNav.vue';
+// import CommonNav from '../components/frontend/CommonNav.vue';
 import HomeNavbar from '../components/frontend/HomeNavbar.vue';
 import FooterBar from "../components/frontend/FooterBar.vue"
 export default {
     components: {
-        CommonNav,
+        // CommonNav,
         HomeNavbar,
         FooterBar,
         TopBar

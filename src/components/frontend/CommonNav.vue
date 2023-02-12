@@ -38,8 +38,8 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <!-- <router-link class="nav-item nav-link" :to="{name: 'Home'}" >Home</router-link>
-                            <router-link class="nav-item nav-link" :to="{name: 'Shop'}" >Shop</router-link> -->
+                            <router-link class="nav-item nav-link" :to="{name: 'home'}" >Home</router-link>
+                            <router-link class="nav-item nav-link" :to="{name: 'shop'}" >Shop</router-link>
                             <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
@@ -48,7 +48,7 @@
                                     <a href="checkout.html" class="dropdown-item">Checkout</a>
                                 </div>
                             </div>
-                            <!-- <router-link class="nav-item nav-link" :to="{name: 'Contact'}" >Contact</router-link> -->
+                            <router-link class="nav-item nav-link" :to="{name: 'contact'}" >Contact</router-link>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             <a href="" class="nav-item nav-link">Login</a>

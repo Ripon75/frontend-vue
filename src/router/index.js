@@ -4,7 +4,7 @@ import ContactView from '../views/frontend/ContactView'
 import CartView from '../views/frontend/CartView'
 import CheckoutView from '../views/frontend/CheckoutView'
 import ShopView from '../views/frontend/ShopView'
-import ProductDetailsView from '../views/frontend/ProductDetails'
+import ProductDetails from '../views/frontend/ProductDetails'
 
 const routes = [
   {
@@ -51,7 +51,7 @@ const routes = [
   {
     path: '/details',
     name: 'details',
-    component: ProductDetailsView,
+    component: ProductDetails,
     meta: {
       layout: 'frontend'
     }

@@ -63,7 +63,8 @@
                         </div>
                     </div>
                 </nav>
-                <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                <!--Home page slider -->
+                <div id="header-carousel" class="carousel slide" :style="{ 'display': display }" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active" style="height: 410px;">
                             <img class="img-fluid" src="/frontend/img/carousel-1.jpg" alt="Image">
@@ -105,6 +106,6 @@
 </template>
 <script>
 export default {
-    
+    props: ['display', 'show']
 }
 </script>

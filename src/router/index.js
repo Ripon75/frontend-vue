@@ -5,6 +5,7 @@ import CartView from '../views/frontend/CartView'
 import CheckoutView from '../views/frontend/CheckoutView'
 import ShopView from '../views/frontend/ShopView'
 import ProductDetails from '../views/frontend/ProductDetails'
+import WishList from '../views/frontend/WishList'
 
 const routes = [
   {
@@ -28,6 +29,14 @@ const routes = [
     path: '/cart',
     name: 'cart',
     component: CartView,
+    meta: {
+      layout: 'frontend'
+    }
+  },
+  {
+    path: '/wishlist',
+    name: 'wishlist',
+    component: WishList,
     meta: {
       layout: 'frontend'
     }

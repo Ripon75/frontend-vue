@@ -4,12 +4,11 @@
         <!-- Topbar End -->
 
         <!-- Navbar for home page Start -->
-        <home-navbar v-if="page === 'home'"></home-navbar>
-        <home-navbar v-else display="none" show="show"></home-navbar>
-        <!-- Navbar for others page Start -->
-        <!-- <common-nav v-else></common-nav> -->
+        <NavBar v-if="page === 'home'" show="show"></NavBar>
+        <NavBar v-else display="d-none"></NavBar>
         <!-- Navbar End -->
 
+        <!-- Dynamic component load -->
         <router-view> </router-view>
 
         <!-- Footer Start -->
@@ -18,13 +17,11 @@
 </template>
 <script>
 import TopBar from "../components/frontend/TopBar.vue"
-// import CommonNav from '../components/frontend/CommonNav.vue';
-import HomeNavbar from '../components/frontend/HomeNavbar.vue';
+import NavBar from '../components/frontend/NavBar.vue';
 import FooterBar from "../components/frontend/FooterBar.vue"
 export default {
     components: {
-        // CommonNav,
-        HomeNavbar,
+        NavBar,
         FooterBar,
         TopBar
     },

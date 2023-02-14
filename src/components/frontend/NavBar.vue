@@ -63,8 +63,12 @@
                             <router-link :to="{name: 'contact'}" class="nav-item nav-link">Contact</router-link>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="" class="nav-item nav-link">Login</a>
-                            <a href="" class="nav-item nav-link">Register</a>
+                            <router-link :to="{name: 'login'}" class="nav-item nav-link">
+                                Login
+                            </router-link>
+                            <router-link :to="{name: 'register'}" class="nav-item nav-link">
+                                Register
+                            </router-link>
                         </div>
                     </div>
                 </nav>

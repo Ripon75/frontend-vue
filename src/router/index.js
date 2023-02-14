@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/frontend/HomeView'
+import RegisterView from '../views/frontend/RegisterView'
+import LoginView from '../views/frontend/LoginView'
 import ContactView from '../views/frontend/ContactView'
 import CartView from '../views/frontend/CartView'
 import CheckoutView from '../views/frontend/CheckoutView'
@@ -14,6 +16,22 @@ const routes = [
     component: HomeView,
     meta: {
       page: 'home',
+      layout: 'frontend'
+    }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterView,
+    meta: {
+      layout: 'frontend'
+    }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView,
+    meta: {
       layout: 'frontend'
     }
   },

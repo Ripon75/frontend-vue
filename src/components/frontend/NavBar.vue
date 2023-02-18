@@ -58,6 +58,7 @@
                                     <router-link :to="{name: 'cart'}" class="dropdown-item">Cart</router-link>
                                     <router-link :to="{name: 'wishlist'}" class="dropdown-item">Wishlist</router-link>
                                     <router-link :to="{name: 'checkout'}" class="dropdown-item">Checkout</router-link>
+                                    <a href="/admin" class="dropdown-item">Admin</a>
                                 </div>
                             </div>
                             <router-link :to="{name: 'contact'}" class="nav-item nav-link">Contact</router-link>

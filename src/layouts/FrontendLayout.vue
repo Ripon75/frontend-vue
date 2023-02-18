@@ -17,7 +17,7 @@
 </template>
 <script>
 import TopBar from "../components/frontend/TopBar.vue"
-import NavBar from '../components/frontend/NavBar.vue';
+import NavBar from "../components/frontend/NavBar.vue";
 import FooterBar from "../components/frontend/FooterBar.vue"
 export default {
     components: {

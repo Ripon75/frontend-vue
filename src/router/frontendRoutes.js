@@ -54,7 +54,7 @@ const routes = [
     name: 'cart',
     component: CartView,
     meta: {
-      // auth: true,
+      auth: true,
       layout: 'frontend',
       title: 'Cart'
     }
@@ -64,6 +64,7 @@ const routes = [
     name: 'wishlist',
     component: WishList,
     meta: {
+      auth: true,
       layout: 'frontend',
       title: 'Wishcart'
     }
@@ -73,6 +74,7 @@ const routes = [
     name: 'checkout',
     component: CheckoutView,
     meta: {
+      auth: true,
       layout: 'frontend',
       title: 'Checkout'
     }
@@ -117,7 +119,7 @@ router.beforeEach((to, from, next) => {
     // if not, redirect to login page.
     if (!store.getters.GET_AUTH_STATUS) {
       next({
-        name: 'Login'
+        name: 'login'
       })
     } else {
       next()
@@ -125,7 +127,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some(record => record.meta.guest)) {
     if (store.getters.GET_AUTH_STATUS) {
       next({
-        name: 'Home'
+        name: 'home'
       })
     } else {
       next()

@@ -59,7 +59,7 @@ export default {
             this.$store.dispatch('LOGIN', this.form)
             .then(res => {
                 if (res.data.success) {
-                    // this.showNotification('success', 'Login successfully');
+                    this.showNotification('success', 'Login successfully');
                     this.$router.push({name: 'home'})
                 } else {
                     this.errors = res.data.msg;

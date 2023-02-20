@@ -75,7 +75,7 @@ export default {
             this.$store.dispatch('REGISTER', this.form)
             .then(res => {
                 if (res.data.success) {
-                    // this.showNotification('success', 'Registration successfully');
+                    this.showNotification('success', 'Registration successfully');
                     this.$router.push({name: 'login'});
                 } else {
                     this.errors = res.data.msg;

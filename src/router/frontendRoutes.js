@@ -35,6 +35,7 @@ const routes = [
     name: 'login',
     component: LoginView,
     meta: {
+      guest: true,
       layout: 'frontend',
       title: 'Login'
     }

@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '../store'
 import HomeView from '../views/frontend/HomeView'
-import RegisterView from '../views/frontend/RegisterView'
-import LoginView from '../views/frontend/LoginView'
-import ContactView from '../views/frontend/ContactView'
 import CartView from '../views/frontend/CartView'
-import CheckoutView from '../views/frontend/CheckoutView'
 import ShopView from '../views/frontend/ShopView'
-import ProductDetails from '../views/frontend/ProductDetails'
 import WishList from '../views/frontend/WishList'
+import LoginView from '../views/frontend/LoginView'
+import RegisterView from '../views/frontend/RegisterView'
+import ContactView from '../views/frontend/ContactView'
+import CheckoutView from '../views/frontend/CheckoutView'
+import ProductDetails from '../views/frontend/ProductDetails'
 
 const routes = [
   {

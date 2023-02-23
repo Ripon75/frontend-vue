@@ -1,7 +1,7 @@
 <template lang="">
     <div>
         <!-- Page Header Start -->
-        <PageHeader title="Shop Detail"></PageHeader>
+        <PageHeader title="Product Details"></PageHeader>
         <!-- Page Header End -->
 
         <!-- Shop Detail Start -->

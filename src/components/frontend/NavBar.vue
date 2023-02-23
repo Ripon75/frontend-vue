@@ -58,18 +58,23 @@
                                     <router-link :to="{name: 'cart'}" class="dropdown-item">Cart</router-link>
                                     <router-link :to="{name: 'wishlist'}" class="dropdown-item">Wishlist</router-link>
                                     <router-link :to="{name: 'checkout'}" class="dropdown-item">Checkout</router-link>
-                                    <a href="/admin" class="dropdown-item">Admin</a>
                                 </div>
                             </div>
                             <router-link :to="{name: 'contact'}" class="nav-item nav-link">Contact</router-link>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <router-link :to="{name: 'login'}" class="nav-item nav-link">
-                                Login
-                            </router-link>
-                            <router-link :to="{name: 'register'}" class="nav-item nav-link">
-                                Register
-                            </router-link>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ auth_username }}</a>
+                                <a href="#" v-if="auth_status === false" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <router-link v-if="auth_status === false" :to="{name: 'login'}" class="dropdown-item">Login</router-link>
+                                    <router-link :to="{name: 'register'}" class="dropdown-item">Register</router-link>
+                                    <a href="/admin" class="dropdown-item">Admin</a>
+                                    <button type="button" @click.prevent="logout" v-if="auth_status" class="dropdown-item">Logout</button>
+                                </div>
+                            </div>
+                            <!-- <router-link :to="{name: 'login'}" class="nav-item nav-link">Login</router-link> -->
+                            <!-- <router-link :to="{name: 'register'}" class="nav-item nav-link">Register</router-link> -->
                         </div>
                     </div>
                 </nav>
@@ -120,8 +125,40 @@
     </div>
 </template>
 <script>
+import store from '../../store'
 export default {
     props: ['display', 'show'],
+    data() {
+        return {
+            auth_status: false,
+            auth_username: ''
+        }
+    },
+    mounted() {
+        var authStatus = store.getters.GET_AUTH_STATUS;
+        var authInfo = store.getters.GET_AUTH_INFO;
+        if (authStatus && authInfo) {
+            this.auth_status   = authStatus;
+            this.auth_username = authInfo.name;
+        }
+    },
+    methods: {
+        logout() {
+            this.$store.dispatch('LOGOUT')
+            .then(res => {
+                console.log(res);
+                if (res.data.success) {
+                    this.showNotification('success', 'Logout successfully');
+                    this.$router.push({name: 'login'})
+                } else {
+                    this.errors = res.data.msg;
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        }
+    },
 }
 </script>
 <style scope>

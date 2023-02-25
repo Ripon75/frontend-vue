@@ -19,7 +19,7 @@
                     <div class="position-relative" style="z-index: 1;">
                         <h5 class="text-uppercase text-primary mb-3">20% off the all order</h5>
                         <h1 class="mb-4 font-weight-semi-bold">Spring Collection</h1>
-                        <router-link :to="{name: 'shop'}" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</router-link>
+                        <router-link :to="{name: 'products'}" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</router-link>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     <div class="position-relative" style="z-index: 1;">
                         <h5 class="text-uppercase text-primary mb-3">20% off the all order</h5>
                         <h1 class="mb-4 font-weight-semi-bold">Winter Collection</h1>
-                        <router-link :to="{name: 'shop'}" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</router-link>
+                        <router-link :to="{name: 'products'}" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</router-link>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,21 @@
 
 
     <!-- Products Start -->
-    <ProductComponent></ProductComponent>
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Trendy Products</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+        <ProductComponent v-for="product in products" :key="product.id"
+                :name="product.name"
+                :slug="product.slug"
+                :img_src="product.img_src"
+                :price="product.price"
+                :promo_price="product.promo_price"
+                >
+            </ProductComponent>
+        </div>
+    </div>
     <!-- Products End -->
 
 
@@ -112,12 +126,32 @@
 import FeatureComponent from '../../components/frontend/FeatureComponent.vue'
 import CategoryComponent from '../../components/frontend/CategoryComponent.vue'
 import ProductComponent from '../../components/frontend/ProductComponent.vue'
+import axios from 'axios'
+
 export default {
   name: 'HomeView',
   components: {
     FeatureComponent,
     CategoryComponent,
     ProductComponent,
-  }
+  },
+  data() {
+    return {
+        products: []
+    }
+  },
+  mounted() {
+    axios.get('products')
+    .then(res => {
+        if (res.data.success) {
+            // console.log(res);
+            var products = res.data.result.data;
+            this.products = products;
+        }
+    })
+    .catch(err => {
+        console.log(err);
+    })
+  },
 }
 </script>

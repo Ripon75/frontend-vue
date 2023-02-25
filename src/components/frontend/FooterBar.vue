@@ -21,7 +21,7 @@
                         <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
                         <div class="d-flex flex-column justify-content-start">
                             <router-link :to="{name: 'home'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Home</router-link>
-                            <router-link :to="{name: 'shop'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Shop</router-link>
+                            <router-link :to="{name: 'products'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Poducts</router-link>
                             <router-link :to="{name: 'cart'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Cart</router-link>
                             <router-link :to="{name: 'checkout'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Checkout</router-link>
                             <router-link :to="{name: 'contact'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Contact</router-link>
@@ -31,7 +31,7 @@
                         <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
                         <div class="d-flex flex-column justify-content-start">
                             <router-link :to="{name: 'home'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Home</router-link>
-                            <router-link :to="{name: 'shop'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Shop</router-link>
+                            <router-link :to="{name: 'products'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Poducts</router-link>
                             <router-link :to="{name: 'cart'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Cart</router-link>
                             <router-link :to="{name: 'checkout'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Checkout</router-link>
                             <router-link :to="{name: 'contact'}" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Contact</router-link>

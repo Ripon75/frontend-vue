@@ -49,8 +49,8 @@
                             <router-link :to="{name: 'home'}" class="nav-item nav-link">
                                 Home
                             </router-link>
-                            <router-link :to="{name: 'shop'}" class="nav-item nav-link">
-                                Shop
+                            <router-link :to="{name: 'products'}" class="nav-item nav-link">
+                                Products
                             </router-link>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
@@ -89,7 +89,7 @@
                                         Order
                                     </h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
-                                    <router-link :to="{name: 'shop'}" class="btn btn-light py-2 px-3">
+                                    <router-link :to="{name: 'products'}" class="btn btn-light py-2 px-3">
                                         Shop Now
                                     </router-link>
                                 </div>
@@ -102,7 +102,7 @@
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First
                                         Order</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
-                                    <router-link :to="{name: 'shop'}" class="btn btn-light py-2 px-3">
+                                    <router-link :to="{name: 'products'}" class="btn btn-light py-2 px-3">
                                         Shop Now
                                     </router-link>
                                 </div>

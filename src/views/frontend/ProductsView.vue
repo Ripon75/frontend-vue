@@ -1,13 +1,13 @@
 <template lang="">
     <div>
         <!-- Page Header Start -->
-        <PageHeader title="Shop"></PageHeader>
+        <PageHeader title="Products"></PageHeader>
         <!-- Page Header End -->
 
-        <!-- Shop Start -->
+        <!-- Products Start -->
         <div class="container-fluid pt-5">
             <div class="row px-xl-5">
-                <!-- Shop Sidebar Start -->
+                <!-- Products Sidebar Start -->
                 <div class="col-lg-3 col-md-12">
                     <!-- Price Start -->
                     <div class="border-bottom mb-4 pb-4">
@@ -141,10 +141,10 @@
                     </div>
                     <!-- Size End -->
                 </div>
-                <!-- Shop Sidebar End -->
+                <!-- Products Sidebar End -->
 
 
-                <!-- Shop Product Start -->
+                <!-- Products Product Start -->
                 <div class="col-lg-9 col-md-12">
                     <div class="row pb-3">
                         <div class="col-12 pb-1">

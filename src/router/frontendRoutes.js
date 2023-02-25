@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '../store'
 import HomeView from '../views/frontend/HomeView'
 import CartView from '../views/frontend/CartView'
-import ShopView from '../views/frontend/ShopView'
+import ProductsView from '../views/frontend/ProductsView'
 import WishList from '../views/frontend/WishList'
 import LoginView from '../views/frontend/LoginView'
 import RegisterView from '../views/frontend/RegisterView'
@@ -80,12 +80,12 @@ const routes = [
     }
   },
   {
-    path: '/shop',
-    name: 'shop',
-    component: ShopView,
+    path: '/products',
+    name: 'products',
+    component: ProductsView,
     meta: {
       layout: 'frontend',
-      title: 'Shop'
+      title: 'Products'
     }
   },
   {

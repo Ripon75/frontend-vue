@@ -89,13 +89,14 @@ const routes = [
     }
   },
   {
-    path: '/details',
-    name: 'details',
+    path: '/products/:id/:slug',
+    name: 'product-details',
     component: ProductDetails,
     meta: {
       layout: 'frontend',
       title: 'Details'
-    }
+    },
+    props:true
   },
 ]
 

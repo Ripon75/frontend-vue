@@ -44,7 +44,8 @@
             <h2 class="section-title px-5"><span class="px-2">Trendy Products</span></h2>
         </div>
         <div class="row px-xl-5 pb-3">
-        <ProductComponent v-for="product in products" :key="product.id"
+            <ProductComponent v-for="product in products" :key="product.id"
+                :id="product.id"
                 :name="product.name"
                 :slug="product.slug"
                 :img_src="product.img_src"

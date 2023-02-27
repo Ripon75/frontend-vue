@@ -50,36 +50,38 @@
                         <div v-if="product.sizes">
                             <div class="custom-control custom-radio custom-control-inline"
                                 v-for="size in product.sizes" :key="size.id">
-                                <input type="radio" class="custom-control-input" id="size-1" name="size">
-                                <label class="custom-control-label" for="size-1">{{ size.name }}</label>
+                                <input type="radio" class="custom-control-input" :id="size.slug" name="size" :value="size.id" v-model="size_id">
+                                <label class="custom-control-label" :for="size.slug">{{ size.name }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="d-flex mb-4">
                         <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
                         <div v-if="product.colors">
-                            <div v-for="color in product.colors" :key="color.id" class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="color-1" name="color">
-                                <label class="custom-control-label" for="color-1">{{ color.name }}</label>
+                            <div class="custom-control custom-radio custom-control-inline"
+                                v-for="color in product.colors" :key="color.id">
+                                <input type="radio" class="custom-control-input" :id="color.slug" :value="color.id" name="color" v-model="color_id">
+                                <label class="custom-control-label" :for="color.slug">{{ color.name }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center mb-4 pt-2">
                         <div class="input-group quantity mr-3" style="width: 130px;">
                             <div class="input-group-btn">
-                                <button class="btn btn-primary btn-minus">
+                                <button class="btn btn-primary btn-minus" @click="decrement">
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control bg-secondary text-center" value="1">
+                            <input type="text" class="form-control bg-secondary text-center" v-model="quantity">
                             <div class="input-group-btn">
-                                <button class="btn btn-primary btn-plus">
+                                <button class="btn btn-primary btn-plus" @click="increment">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                            Cart</button>
+                        <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i>
+                            Add ToCart
+                        </button>
                     </div>
                     <div class="d-flex pt-2">
                         <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
@@ -176,28 +178,40 @@
 </template>
 <script>
 import PageHeader from '@/components/frontend/PageHeader.vue';
-import axios from 'axios';
 export default {
     components: {
         PageHeader
     },
     data() {
         return {
-            product: '',
             id: '',
-            active: 'active'
+            product: '',
+            active: 'active',
+            quantity: 1,
+            color_id: '',
+            size_id: '',
+        }
+    },
+    methods: {
+        increment() {
+            this.quantity++;
+        },
+        decrement() {
+            if (this.quantity > 1) {
+                this.quantity--;
+            }
         }
     },
     mounted() {
         this.id = this.$route.params.id;
-        axios.get(`products/${this.id}`)
+        this.$store.dispatch('PRODUCT_SINGLE', this.id)
         .then(res => {
             if (res.data.success) {
                 this.product = res.data.result;
             }
         })
-        .catch(error => {
-            console.log(error);
+        .catch(err => {
+            console.log(err);
         })
     },
 }

@@ -24,7 +24,7 @@ export const auth = {
     }
   },
 
-  // Get data from actons
+  // Get data from actons & set data to state
   mutations: {
     // Set auth token when user login
     SET_AUTH_TOKEN(state, payload) {
@@ -55,8 +55,6 @@ export const auth = {
   actions: {
     // payload means form data
     REGISTER(context, payload) {
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ context.state.auth_token;
-
       return new Promise((resolve, reject) => {
         axios.post('register', payload)
         .then(res => {

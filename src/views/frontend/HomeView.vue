@@ -82,7 +82,22 @@
 
 
     <!-- Products Start -->
-    <ProductComponent></ProductComponent>
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Latest Products</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+            <ProductComponent v-for="product in products" :key="product.id"
+                :id="product.id"
+                :name="product.name"
+                :slug="product.slug"
+                :img_src="product.img_src"
+                :price="product.price"
+                :promo_price="product.promo_price"
+                >
+            </ProductComponent>
+        </div>
+    </div>
     <!-- Products End -->
 
 
@@ -127,7 +142,7 @@
 import FeatureComponent from '../../components/frontend/FeatureComponent.vue'
 import CategoryComponent from '../../components/frontend/CategoryComponent.vue'
 import ProductComponent from '../../components/frontend/ProductComponent.vue'
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   name: 'HomeView',
@@ -142,7 +157,7 @@ export default {
     }
   },
   mounted() {
-    axios.get('products')
+    this.$store.dispatch('PRODUCTS')
     .then(res => {
         if (res.data.success) {
             var products = res.data.result.data;

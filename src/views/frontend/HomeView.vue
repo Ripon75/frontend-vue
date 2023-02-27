@@ -145,7 +145,6 @@ export default {
     axios.get('products')
     .then(res => {
         if (res.data.success) {
-            // console.log(res);
             var products = res.data.result.data;
             this.products = products;
         }

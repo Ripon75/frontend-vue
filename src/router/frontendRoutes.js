@@ -41,7 +41,7 @@ const routes = [
     }
   },
   {
-    path: '/contact',
+    path: "/contact",
     name: 'contact',
     component: ContactView,
     meta: {
@@ -101,7 +101,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes
 })
 

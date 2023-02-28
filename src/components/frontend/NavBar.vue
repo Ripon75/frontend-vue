@@ -131,7 +131,7 @@ export default {
     data() {
         return {
             auth_status: false,
-            auth_username: ''
+            auth_username: '',
         }
     },
     mounted() {

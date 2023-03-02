@@ -39,8 +39,8 @@
                     </div>
                     <div class="d-flex">
                         <h4 class="font-weight-semi-bold mb-4">Tk {{ product.price }}</h4>
-                            <span class="text-muted ml-2 mt-1"><del v-if="product.promo_price != 0">
-                                {{ product.promo_price }}
+                            <span class="text-muted ml-2 mt-1"><del v-if="product.offer_price != 0">
+                                {{ product.offer_price }}
                                 </del>
                             </span>
                     </div>
@@ -50,7 +50,7 @@
                         <div v-if="product.sizes">
                             <div class="custom-control custom-radio custom-control-inline"
                                 v-for="size in product.sizes" :key="size.id">
-                                <input type="radio" class="custom-control-input" :id="size.slug" name="size" :value="size.id" v-model="size_id">
+                                <input type="radio" class="custom-control-input" :id="size.slug" name="size" :value="size.id" v-model="cartItemData.size_id">
                                 <label class="custom-control-label" :for="size.slug">{{ size.name }}</label>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                         <div v-if="product.colors">
                             <div class="custom-control custom-radio custom-control-inline"
                                 v-for="color in product.colors" :key="color.id">
-                                <input type="radio" class="custom-control-input" :id="color.slug" :value="color.id" name="color" v-model="color_id">
+                                <input type="radio" class="custom-control-input" :id="color.slug" :value="color.id" name="color" v-model="cartItemData.color_id">
                                 <label class="custom-control-label" :for="color.slug">{{ color.name }}</label>
                             </div>
                         </div>
@@ -72,14 +72,16 @@
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control bg-secondary text-center" v-model="quantity">
+                            <input type="text" class="form-control bg-secondary text-center" v-model="cartItemData.quantity">
                             <div class="input-group-btn">
                                 <button class="btn btn-primary btn-plus" @click="increment">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i>
+                        <button class="btn btn-primary px-3" :disabled="isLoading" @click="addToCart">
+                            <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
+                            <span v-else><i class="fa fa-shopping-cart mr-1"></i></span>
                             Add ToCart
                         </button>
                     </div>
@@ -178,28 +180,50 @@
 </template>
 <script>
 import PageHeader from '@/components/frontend/PageHeader.vue';
+// import axios from 'axios';
+// import store from '@/store';
 export default {
     components: {
-        PageHeader
+        PageHeader,
     },
     data() {
         return {
             id: '',
             product: '',
-            active: 'active',
-            quantity: 1,
-            color_id: '',
-            size_id: '',
+            isLoading: false,
+            cartItemData: {
+                item_id: '',
+                quantity: 1,
+                size_id: 1,
+                color_id: 1
+            }
         }
     },
     methods: {
         increment() {
-            this.quantity++;
+            this.cartItemData.quantity++;
         },
         decrement() {
-            if (this.quantity > 1) {
-                this.quantity--;
+            if (this.cartItemData.quantity > 1) {
+                this.cartItemData.quantity--;
             }
+        },
+        addToCart() {
+            this.isLoading = true;
+
+            this.$store.dispatch('CART_ITEM_ADD', this.cartItemData)
+            .then(res => {
+                if (res.data.success) {
+                    this.showNotification('success', res.data.msg);
+                } else {
+                    this.showNotification('warning', res.data.msg);
+                }
+                this.isLoading = false;
+            })
+            .catch(err => {
+                console.log(err);
+                this.isLoading = false;
+            })
         }
     },
     mounted() {
@@ -208,6 +232,9 @@ export default {
         .then(res => {
             if (res.data.success) {
                 this.product = res.data.result;
+                if (this.product) {
+                    this.cartItemData.item_id = this.product.id;
+                }
             }
         })
         .catch(err => {

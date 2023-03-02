@@ -148,7 +148,7 @@ export default {
             .then(res => {
                 console.log(res);
                 if (res.data.success) {
-                    this.showNotification('success', 'Logout successfully');
+                    this.showNotification('success', res.data.msg);
                     this.$router.push({name: 'login'})
                 } else {
                     this.errors = res.data.msg;

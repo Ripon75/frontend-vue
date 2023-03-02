@@ -1,7 +1,8 @@
 import { createStore } from 'vuex'
 import createPersistedState from "vuex-persistedstate";
-import {auth} from './modules/auth'
 import {products} from './modules/products'
+import {cart} from './modules/cart'
+import {auth} from './modules/auth'
 
 export default createStore({
   state: {
@@ -14,7 +15,8 @@ export default createStore({
   },
   modules: {
     auth,
-    products
+    products,
+    cart
   },
   plugins: [createPersistedState({
      paths: ['auth']

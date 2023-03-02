@@ -50,7 +50,7 @@
                 :slug="product.slug"
                 :img_src="product.img_src"
                 :price="product.price"
-                :promo_price="product.promo_price"
+                :offer_price="product.offer_price"
                 >
             </ProductComponent>
         </div>
@@ -142,7 +142,6 @@
 import FeatureComponent from '../../components/frontend/FeatureComponent.vue'
 import CategoryComponent from '../../components/frontend/CategoryComponent.vue'
 import ProductComponent from '../../components/frontend/ProductComponent.vue'
-// import axios from 'axios'
 
 export default {
   name: 'HomeView',

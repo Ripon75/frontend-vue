@@ -14,9 +14,9 @@ const Toast = Swal.mixin({
 
 export default {
     toastFire(type, message) {
-        Toast.fire({
-            icon: type,
-            title: message
-        })
-    }
+    Toast.fire({
+          icon: type,
+          title: message
+    })
+  }
 }

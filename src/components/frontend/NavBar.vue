@@ -73,8 +73,6 @@
                                     <button type="button" @click.prevent="logout" v-if="auth_status" class="dropdown-item">Logout</button>
                                 </div>
                             </div>
-                            <!-- <router-link :to="{name: 'login'}" class="nav-item nav-link">Login</router-link> -->
-                            <!-- <router-link :to="{name: 'register'}" class="nav-item nav-link">Register</router-link> -->
                         </div>
                     </div>
                 </nav>
@@ -127,19 +125,12 @@
 <script>
 import store from '../../store'
 export default {
+    name: 'NavBar',
     props: ['display', 'show'],
     data() {
         return {
             auth_status: false,
             auth_username: '',
-        }
-    },
-    mounted() {
-        var authStatus = store.getters.GET_AUTH_STATUS;
-        var authInfo = store.getters.GET_AUTH_INFO;
-        if (authStatus && authInfo) {
-            this.auth_status   = authStatus;
-            this.auth_username = authInfo.name;
         }
     },
     methods: {
@@ -159,10 +150,20 @@ export default {
             });
         }
     },
+    mounted() {
+        // Get auth info from state
+        var authStatus = store.getters.GET_AUTH_STATUS;
+        var authInfo = store.getters.GET_AUTH_INFO;
+        if (authStatus && authInfo) {
+            this.auth_status   = authStatus;
+            this.auth_username = authInfo.name;
+        }
+        
+    },
 }
 </script>
 <style scope>
     a.router-link-active {
-        background: #bbb;
+        background: #F4F6F6;
     }
 </style>

@@ -180,8 +180,6 @@
 </template>
 <script>
 import PageHeader from '@/components/frontend/PageHeader.vue';
-// import axios from 'axios';
-// import store from '@/store';
 export default {
     components: {
         PageHeader,
@@ -210,7 +208,7 @@ export default {
         },
         addToCart() {
             this.isLoading = true;
-
+            
             this.$store.dispatch('CART_ITEM_ADD', this.cartItemData)
             .then(res => {
                 if (res.data.success) {

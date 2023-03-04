@@ -59,7 +59,7 @@
                 </router-link>
                 <router-link :to="{name: 'cart'}" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge">{{ $store.state.cart.cart_items }}</span>
                 </router-link>
             </div>
         </div>
@@ -67,6 +67,14 @@
 </template>
 <script>
 export default {
-    
+    name: 'TopBar',
+    mounted() {
+        this.$store.dispatch('CART_ITEM_COUNT')
+        .then(() => {
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    },
 }
 </script>

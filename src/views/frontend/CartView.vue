@@ -19,10 +19,13 @@
                             </tr>
                         </thead>
                         <tbody class="align-middle">
-                            <tr>
-                                <td class="align-middle"><img src="frontend/img/product-1.jpg" alt="" style="width: 50px;">
-                                    Colorful Stylish Shirt</td>
-                                <td class="align-middle">$150</td>
+                            <tr v-for="(item, index) in cartItems" :key="index">
+                                <td class="align-middle">
+                                    <img :src="item.img_src" alt="" style="width: 50px;">
+                                    {{ item.name }}
+                                </td>
+                                <td v-if="item.pivot.offer_price != 0" class="align-middle">{{ item.pivot.offer_price }}</td>
+                                <td v-else class="align-middle">{{ item.pivot.price }}</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
@@ -31,7 +34,7 @@
                                             </button>
                                         </div>
                                         <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                            value="1">
+                                            :value="item.pivot.quantity">
                                         <div class="input-group-btn">
                                             <button class="btn btn-sm btn-primary btn-plus">
                                                 <i class="fa fa-plus"></i>
@@ -39,105 +42,12 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle">$150</td>
-                                <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                            class="fa fa-times"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle"><img src="frontend/img/product-2.jpg" alt="" style="width: 50px;">
-                                    Colorful Stylish Shirt</td>
-                                <td class="align-middle">$150</td>
+                                <td class="align-middle">{{ item.pivot.total_price }}</td>
                                 <td class="align-middle">
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-minus">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                            value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-plus">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="fa fa-times"></i>
+                                    </button>
                                 </td>
-                                <td class="align-middle">$150</td>
-                                <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                            class="fa fa-times"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle"><img src="frontend/img/product-3.jpg" alt="" style="width: 50px;">
-                                    Colorful Stylish Shirt</td>
-                                <td class="align-middle">$150</td>
-                                <td class="align-middle">
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-minus">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                            value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-plus">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="align-middle">$150</td>
-                                <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                            class="fa fa-times"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle"><img src="frontend/img/product-4.jpg" alt="" style="width: 50px;">
-                                    Colorful Stylish Shirt</td>
-                                <td class="align-middle">$150</td>
-                                <td class="align-middle">
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-minus">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                            value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-plus">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="align-middle">$150</td>
-                                <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                            class="fa fa-times"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle"><img src="frontend/img/product-5.jpg" alt="" style="width: 50px;">
-                                    Colorful Stylish Shirt</td>
-                                <td class="align-middle">$150</td>
-                                <td class="align-middle">
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-minus">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                            value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-plus">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="align-middle">$150</td>
-                                <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                            class="fa fa-times"></i></button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -185,8 +95,25 @@
 <script>
 import PageHeader from '@/components/frontend/PageHeader.vue';
 export default {
+    name: 'CartView',
     components: {
         PageHeader
+    },
+    data() {
+        return {
+            cartItems: []
+        }
+    },
+    mounted() {
+        this.$store.dispatch('GET_CART_ITEMS')
+        .then(res => {
+            if (res.data.success) {
+                this.cartItems = res.data.result;
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 }
 </script>

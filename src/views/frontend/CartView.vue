@@ -15,36 +15,39 @@
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
+                                <th>Size</th>
+                                <th>Color</th>
                                 <th>Remove</th>
                             </tr>
                         </thead>
                         <tbody class="align-middle">
-                            <tr v-for="(item, index) in cartItems" :key="index">
+                            <tr v-for="(item, index) in items" :key="index">
                                 <td class="align-middle">
-                                    <img :src="item.img_src" alt="" style="width: 50px;">
+                                    <img :src="item.img_src" :alt="item.name" style="width: 50px;">
                                     {{ item.name }}
                                 </td>
-                                <td v-if="item.pivot.offer_price != 0" class="align-middle">{{ item.pivot.offer_price }}</td>
-                                <td v-else class="align-middle">{{ item.pivot.price }}</td>
+                                <td class="align-middle">{{ item.pivot.selling_price }}</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-minus">
+                                            <button class="btn btn-sm btn-primary btn-minus" @click="decrement(index)">
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
                                         <input type="text" class="form-control form-control-sm bg-secondary text-center"
                                             :value="item.pivot.quantity">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-plus">
+                                            <button class="btn btn-sm btn-primary btn-plus" @click="increment(index)">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="align-middle">{{ item.pivot.total_price }}</td>
+                                <td class="align-middle">{{ sizes[index].name }}</td>
+                                <td class="align-middle">{{ colors[index].name }}</td>
                                 <td class="align-middle">
-                                    <button class="btn btn-sm btn-primary">
+                                    <button class="btn btn-sm btn-primary" @click="removedItem(index)">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </td>
@@ -101,14 +104,29 @@ export default {
     },
     data() {
         return {
-            cartItems: []
+            items: [],
+            sizes: [],
+            colors: [],
+        }
+    },
+    methods: {
+        removedItem(index) {
+            this.items.splice(index, 1);
+        },
+        increment(index) {
+            this.items[index].pivot.quantity++;
+        },
+        decrement(index) {
+            this.items[index].pivot.quantity--;
         }
     },
     mounted() {
         this.$store.dispatch('GET_CART_ITEMS')
         .then(res => {
             if (res.data.success) {
-                this.cartItems = res.data.result;
+                this.items = res.data.result.items;
+                this.sizes = res.data.result.sizes;
+                this.colors = res.data.result.colors;
             }
         })
         .catch(err => {

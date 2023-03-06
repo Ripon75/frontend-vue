@@ -137,7 +137,6 @@ export default {
         logout() {
             this.$store.dispatch('LOGOUT')
             .then(res => {
-                console.log(res);
                 if (res.data.success) {
                     this.showNotification('success', res.data.msg);
                     this.$router.push({name: 'login'})

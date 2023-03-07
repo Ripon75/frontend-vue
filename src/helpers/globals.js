@@ -13,6 +13,7 @@ const Toast = Swal.mixin({
 })
 
 export default {
+    currency:  'Tk',
     toastFire(type, message) {
     Toast.fire({
           icon: type,

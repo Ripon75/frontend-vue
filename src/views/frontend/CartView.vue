@@ -5,7 +5,7 @@
         <!-- Page Header End -->
 
         <!-- Cart Start -->
-        <div class="container-fluid pt-5">
+        <div class="container-fluid">
             <div class="row px-xl-5">
                 <div class="col-lg-8 table-responsive mb-5">
                     <table class="table table-bordered text-center mb-0">
@@ -71,17 +71,17 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3 pt-1">
                                 <h6 class="font-weight-medium">Subtotal</h6>
-                                <h6 class="font-weight-medium">$150</h6>
+                                <h6 class="font-weight-medium">{{ this.currency }} {{ totalPrice }}</h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">$10</h6>
+                                <h6 class="font-weight-medium">{{ this.currency }} 10</h6>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold">$160</h5>
+                                <h5 class="font-weight-bold">{{ this.currency }} {{ totalPrice + 10 }}</h5>
                             </div>
                             <!-- <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button> -->
                             <router-link :to="{name: 'checkout'}" class="btn btn-block btn-primary my-3 py-3">
@@ -114,10 +114,39 @@ export default {
             this.items.splice(index, 1);
         },
         increment(index) {
-            this.items[index].pivot.quantity++;
+            var item = this.items[index]
+            item.pivot.quantity++;
+            item.pivot.total_price = item.pivot.selling_price * item.pivot.quantity;
+            var cartItemData = {
+                item_id: item.id,
+                quantity: item.pivot.quantity,
+                size_id: item.pivot.size_id,
+                color_id: item.pivot.color_id,
+                selling_price: item.pivot.selling_price
+            }
+            this.updapteQty(cartItemData);
         },
         decrement(index) {
-            this.items[index].pivot.quantity--;
+            var item = this.items[index]
+            if (item.pivot.quantity > 1) {
+                item.pivot.quantity--;
+            }
+            item.pivot.total_price = item.pivot.selling_price * item.pivot.quantity;
+            var cartItemData = {
+                item_id: item.id,
+                quantity: item.pivot.quantity,
+                size_id: item.pivot.size_id,
+                color_id: item.pivot.color_id,
+                selling_price: item.pivot.selling_price
+            }
+            this.updapteQty(cartItemData);
+        },
+        updapteQty(cartItemData) {
+            this.$store.dispatch('CART_ITEM_QTY_UPDATE', cartItemData)
+            .then()
+            .catch(err => {
+                console.log(err);
+            })
         }
     },
     mounted() {
@@ -131,7 +160,14 @@ export default {
         })
         .catch(err => {
             console.log(err);
-        })
-    }
+        });
+    },
+   computed: {
+    totalPrice() {
+      return this.items.reduce((total, item) => {
+        return total + item.pivot.selling_price * item.pivot.quantity;
+      }, 0);
+    },
+  },
 }
 </script>

@@ -6,7 +6,7 @@
 
 
     <!-- Categories Start -->
-    <CategoryComponent></CategoryComponent>
+    <!-- <CategoryComponent></CategoryComponent> -->
     <!-- Categories End -->
 
 
@@ -140,14 +140,14 @@
 
 <script>
 import FeatureComponent from '../../components/frontend/FeatureComponent.vue'
-import CategoryComponent from '../../components/frontend/CategoryComponent.vue'
+// import CategoryComponent from '../../components/frontend/CategoryComponent.vue'
 import ProductComponent from '../../components/frontend/ProductComponent.vue'
 
 export default {
   name: 'HomeView',
   components: {
     FeatureComponent,
-    CategoryComponent,
+    // CategoryComponent,
     ProductComponent,
   },
   data() {

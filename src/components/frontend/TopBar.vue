@@ -66,15 +66,19 @@
     </div>
 </template>
 <script>
+import store from '../../store'
 export default {
     name: 'TopBar',
     mounted() {
-        this.$store.dispatch('CART_ITEM_COUNT')
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err);
-        });
+        var authStatus = store.getters.GET_AUTH_STATUS;
+        if (authStatus) {
+            this.$store.dispatch('CART_ITEM_COUNT')
+            .then(() => {
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        }
     },
 }
 </script>

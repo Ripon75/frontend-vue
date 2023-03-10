@@ -26,7 +26,8 @@
                                 </p>
                             </div>
                             <div>
-                                <button class="btn btn-primary py-2 px-4 float-right mb-3" type="submit">
+                                <button type="button" class="btn btn-primary py-2 px-4 float-right mb-3" :disabled="isLoading" @click="login">
+                                    <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
                                     Submit
                                 </button>
                             </div>
@@ -46,6 +47,7 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             form: {
                 phone_number: null,
                 password: null
@@ -56,19 +58,23 @@ export default {
     },
     methods: {
         login() {
+            this.isLoading = true;
             this.$store.dispatch('LOGIN', this.form)
             .then(res => {
                 if (res.data.success) {
                     this.showNotification('success', res.data.msg);
-                    this.$router.push({name: 'home'})
+                    this.$router.push({name: 'home'});
+                    this.isLoading = false;
                 } else {
+                    this.isLoading = false;
                     this.errors = res.data.msg;
                     if (typeof this.errors !== 'object') {
-                        this.not_match = res.data.msg
+                        this.not_match = res.data.msg;
                     }
                 }
             })
             .catch(err => {
+                this.isLoading = false
                 console.log(err);
             });
         }

@@ -12,11 +12,11 @@
                         <thead class="bg-secondary text-dark">
                             <tr>
                                 <th>Products</th>
+                                <th>Size</th>
+                                <th>Color</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
-                                <th>Size</th>
-                                <th>Color</th>
                                 <th>Remove</th>
                             </tr>
                         </thead>
@@ -26,6 +26,8 @@
                                     <img :src="item.img_src" :alt="item.name" style="width: 50px;">
                                     {{ item.name }}
                                 </td>
+                                <td class="align-middle">{{ sizes[index].name }}</td>
+                                <td class="align-middle">{{ colors[index].name }}</td>
                                 <td class="align-middle">{{ item.pivot.selling_price }}</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -44,8 +46,6 @@
                                     </div>
                                 </td>
                                 <td class="align-middle">{{ item.pivot.total_price }}</td>
-                                <td class="align-middle">{{ sizes[index].name }}</td>
-                                <td class="align-middle">{{ colors[index].name }}</td>
                                 <td class="align-middle">
                                     <button class="btn btn-sm btn-primary" @click="removedItem(index)">
                                         <i class="fa fa-times"></i>
@@ -71,19 +71,18 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3 pt-1">
                                 <h6 class="font-weight-medium">Subtotal</h6>
-                                <h6 class="font-weight-medium">{{ this.currency }} {{ totalPrice }}</h6>
+                                <h6 class="font-weight-medium">{{ currency }} {{ totalPrice }}</h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">{{ this.currency }} 10</h6>
+                                <h6 class="font-weight-medium">{{ currency }} 10</h6>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold">{{ this.currency }} {{ totalPrice + 10 }}</h5>
+                                <h5 class="font-weight-bold">{{ currency }} {{ totalPrice + 10 }}</h5>
                             </div>
-                            <!-- <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button> -->
                             <router-link :to="{name: 'checkout'}" class="btn btn-block btn-primary my-3 py-3">
                                 Proceed To Checkout
                             </router-link>
@@ -97,6 +96,7 @@
 </template>
 <script>
 import PageHeader from '@/components/frontend/PageHeader.vue';
+import store from '../../store'
 export default {
     name: 'CartView',
     components: {
@@ -104,18 +104,44 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             items: [],
             sizes: [],
             colors: [],
         }
     },
     methods: {
+        // Increment cart item quantity
+        increment(index) {
+            var cartItemData = this.getCartItemData(index, 'plus')
+            this.updapteQty(cartItemData);
+        },
+        // Decrement cart item quantity
+        decrement(index) {
+            var cartItemData = this.getCartItemData(index, 'minus')
+            this.updapteQty(cartItemData);
+        },
+        // Removed cart item
         removedItem(index) {
+            var cartItemData = this.getCartItemData(index)
+            this.$store.dispatch('CART_ITEM_REMOVED', cartItemData)
+            .then()
+            .catch(err => {
+                console.log(err);
+            })
+
             this.items.splice(index, 1);
         },
-        increment(index) {
+        getCartItemData(index, operator = null) {
             var item = this.items[index]
-            item.pivot.quantity++;
+            if (operator === 'plus') {
+                item.pivot.quantity++;
+            }
+            if (operator === 'minus') {
+                if (item.pivot.quantity > 1) {
+                    item.pivot.quantity--;
+                }
+            }
             item.pivot.total_price = item.pivot.selling_price * item.pivot.quantity;
             var cartItemData = {
                 item_id: item.id,
@@ -124,22 +150,8 @@ export default {
                 color_id: item.pivot.color_id,
                 selling_price: item.pivot.selling_price
             }
-            this.updapteQty(cartItemData);
-        },
-        decrement(index) {
-            var item = this.items[index]
-            if (item.pivot.quantity > 1) {
-                item.pivot.quantity--;
-            }
-            item.pivot.total_price = item.pivot.selling_price * item.pivot.quantity;
-            var cartItemData = {
-                item_id: item.id,
-                quantity: item.pivot.quantity,
-                size_id: item.pivot.size_id,
-                color_id: item.pivot.color_id,
-                selling_price: item.pivot.selling_price
-            }
-            this.updapteQty(cartItemData);
+
+            return cartItemData;
         },
         updapteQty(cartItemData) {
             this.$store.dispatch('CART_ITEM_QTY_UPDATE', cartItemData)
@@ -147,25 +159,30 @@ export default {
             .catch(err => {
                 console.log(err);
             })
-        }
+        },
     },
     mounted() {
-        this.$store.dispatch('GET_CART_ITEMS')
-        .then(res => {
-            if (res.data.success) {
-                this.items = res.data.result.items;
-                this.sizes = res.data.result.sizes;
-                this.colors = res.data.result.colors;
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
+        // Get cart items
+        var authStatus = store.getters.GET_AUTH_STATUS;
+        if (authStatus) {
+            this.$store.dispatch('GET_CART_ITEMS')
+            .then(res => {
+                if (res.data.success) {
+                    this.items = res.data.result.items;
+                    this.sizes = res.data.result.sizes;
+                    this.colors = res.data.result.colors;
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        }
     },
    computed: {
+    // Calculate cart item total price
     totalPrice() {
       return this.items.reduce((total, item) => {
-        return total + item.pivot.selling_price * item.pivot.quantity;
+        return total + parseFloat(item.pivot.total_price);
       }, 0);
     },
   },

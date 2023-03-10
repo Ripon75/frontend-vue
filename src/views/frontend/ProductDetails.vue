@@ -208,7 +208,6 @@ export default {
         },
         addToCart() {
             this.isLoading = true;
-            
             this.$store.dispatch('CART_ITEM_ADD', this.cartItemData)
             .then(res => {
                 if (res.data.success) {

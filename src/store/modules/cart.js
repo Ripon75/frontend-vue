@@ -15,6 +15,13 @@ export const cart = {
     mutations: {
         SET_CART_ITEM(state, payload) {
             state.cart_items = state.cart_items + payload;
+        },
+        UPDATE_CART_ITEM(state, payload) {
+            if (payload === 'plus') {
+                state.cart_items = state.cart_items + 1;
+            }else {
+                state.cart_items = state.cart_items - 1;
+            }
         }
     },
     // Get data from facing api
@@ -37,7 +44,7 @@ export const cart = {
                 axios.post('add/cart/items', payload)
                 .then(res => {
                     if (res.data.success) {
-                        context.commit('SET_CART_ITEM', 1);
+                        context.commit('UPDATE_CART_ITEM', 'plus');
                     }
                     resolve(res);
                 })
@@ -73,6 +80,21 @@ export const cart = {
                     reject(err);
                 })
             })
-        } 
+        },
+        CART_ITEM_REMOVED(context, payload) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+ context.getters.GET_AUTH_TOKEN;
+            return new Promise((resolve, reject) => {
+                axios.post('remove/cart/items', payload)
+                .then(res => {
+                    if (res.data.success) {
+                        context.commit('UPDATE_CART_ITEM', 1)
+                    }
+                    resolve(res)
+                })
+                .catch(err => {
+                    reject(err)
+                })
+            })
+        }
     }
 }

@@ -64,7 +64,7 @@
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ auth_username }}</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" v-if="auth_username">{{ auth_username }}</a>
                                 <a href="#" v-if="auth_status === false" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <router-link v-if="auth_status === false" :to="{name: 'login'}" class="dropdown-item">Login</router-link>

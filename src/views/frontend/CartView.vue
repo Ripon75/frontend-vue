@@ -28,7 +28,7 @@
                                 </td>
                                 <td class="align-middle">{{ sizes[index].name }}</td>
                                 <td class="align-middle">{{ colors[index].name }}</td>
-                                <td class="align-middle">{{ item.pivot.selling_price }}</td>
+                                <td class="align-middle">{{ item.pivot.sell_price }}</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">

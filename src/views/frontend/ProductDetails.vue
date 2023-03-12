@@ -180,6 +180,7 @@
 </template>
 <script>
 import PageHeader from '@/components/frontend/PageHeader.vue';
+import store from '../../store'
 export default {
     components: {
         PageHeader,
@@ -207,20 +208,25 @@ export default {
             }
         },
         addToCart() {
-            this.isLoading = true;
-            this.$store.dispatch('CART_ITEM_ADD', this.cartItemData)
-            .then(res => {
-                if (res.data.success) {
-                    this.showNotification('success', res.data.msg);
-                } else {
-                    this.showNotification('warning', res.data.msg);
-                }
-                this.isLoading = false;
-            })
-            .catch(err => {
-                console.log(err);
-                this.isLoading = false;
-            })
+            this.isLoading = true
+            var authStatus = store.getters.GET_AUTH_STATUS
+            if (authStatus) {
+                this.$store.dispatch('CART_ITEM_ADD', this.cartItemData)
+                .then(res => {
+                    if (res.data.success) {
+                        this.showNotification('success', res.data.msg)
+                    } else {
+                        this.showNotification('warning', res.data.msg)
+                    }
+                    this.isLoading = false
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.isLoading = false;
+                })
+            } else {
+                this.$router.push({ name: 'login' })
+            }
         }
     },
     mounted() {

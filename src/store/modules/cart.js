@@ -38,6 +38,7 @@ export const cart = {
                 })
             })
         },
+
         CART_ITEM_ADD(context, payload) {
             axios.defaults.headers.common['Authorization'] = 'Bearer '+ context.getters.GET_AUTH_TOKEN;
             return new Promise((resolve, reject) => {
@@ -53,6 +54,7 @@ export const cart = {
                 });
             })
         },
+
         CART_ITEM_QTY_UPDATE(context, payload) {
             axios.defaults.headers.common['Authorization'] = 'Bearer '+ context.getters.GET_AUTH_TOKEN;
             return new Promise((resolve, reject) => {
@@ -65,6 +67,7 @@ export const cart = {
                 });
             })
         },
+
         CART_ITEM_COUNT(context) {
             axios.defaults.headers.common['Authorization'] = 'Bearer '+ context.getters.GET_AUTH_TOKEN;
             return new Promise((resolve, reject) => {
@@ -81,6 +84,7 @@ export const cart = {
                 })
             })
         },
+
         CART_ITEM_REMOVED(context, payload) {
             axios.defaults.headers.common['Authorization'] = 'Bearer '+ context.getters.GET_AUTH_TOKEN;
             return new Promise((resolve, reject) => {
@@ -89,6 +93,19 @@ export const cart = {
                     if (res.data.success) {
                         context.commit('UPDATE_CART_ITEM', 1)
                     }
+                    resolve(res)
+                })
+                .catch(err => {
+                    reject(err)
+                })
+            })
+        },
+
+        ORDER_SUBMIT(context, payload) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+ context.getters.GET_AUTH_TOKEN;
+            return new Promise((resolve, reject) => {
+                axios.post('orders/submit', payload)
+                .then(res => {
                     resolve(res)
                 })
                 .catch(err => {

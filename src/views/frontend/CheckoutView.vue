@@ -7,60 +7,23 @@
         <!-- Checkout Start -->
         <div class="container-fluid">
             <div class="row px-xl-5">
-                <div class="col-lg-8">
+                <div class="col-lg-7">
                     <div class="mb-4">
-                        <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
+                        <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
                         <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label>First Name</label>
-                                <input class="form-control" type="text" placeholder="John">
+                            <input type="radio" class="ml-2 mr-2">
+                            <div class="col-md-5 form-group border border-success">
+                                <span>Home</span> <br>
+                                <span>Dhaka-Bangladesh</span> <br>
+                                <span>Ramna</span> <br>
+                                <span>+8801764997485</span> <br>
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label>Last Name</label>
-                                <input class="form-control" type="text" placeholder="Doe">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>E-mail</label>
-                                <input class="form-control" type="text" placeholder="example@email.com">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Mobile No</label>
-                                <input class="form-control" type="text" placeholder="+123 456 789">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Address Line 1</label>
-                                <input class="form-control" type="text" placeholder="123 Street">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Address Line 2</label>
-                                <input class="form-control" type="text" placeholder="123 Street">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Country</label>
-                                <select class="custom-select">
-                                    <option selected>United States</option>
-                                    <option>Afghanistan</option>
-                                    <option>Albania</option>
-                                    <option>Algeria</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>City</label>
-                                <input class="form-control" type="text" placeholder="New York">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>State</label>
-                                <input class="form-control" type="text" placeholder="New York">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>ZIP Code</label>
-                                <input class="form-control" type="text" placeholder="123">
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="newaccount">
-                                    <label class="custom-control-label" for="newaccount">Create an account</label>
-                                </div>
+                            <input type="radio" class="ml-2 mr-2">
+                            <div class="col-md-5 form-group border border-success">
+                                <span>Home</span> <br>
+                                <span>Dhaka-Bangladesh</span> <br>
+                                <span>Ramna</span> <br>
+                                <span>+8801764997485</span> <br>
                             </div>
                             <div class="col-md-12 form-group">
                                 <div class="custom-control custom-checkbox">
@@ -122,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-5">
                     <div class="card border-secondary mb-4">
                         <div class="card-header bg-secondary border-0">
                             <h4 class="font-weight-semi-bold m-0">Order Total</h4>
@@ -160,25 +123,25 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment" id="paypal">
+                                    <input type="radio" class="custom-control-input" :value='1' v-model="orderData.pg_id" id="paypal">
                                     <label class="custom-control-label" for="paypal">Paypal</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment" id="directcheck">
+                                    <input type="radio" class="custom-control-input" :value='2' v-model="orderData.pg_id" id="directcheck">
                                     <label class="custom-control-label" for="directcheck">Direct Check</label>
                                 </div>
                             </div>
                             <div class="">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
+                                    <input type="radio" class="custom-control-input" :value='3' v-model="orderData.pg_id" id="banktransfer">
                                     <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
-                            <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
+                            <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" @click="orderSubmit">
                                 Place Order
                             </button>
                         </div>
@@ -198,7 +161,26 @@ export default {
     },
     data() {
         return {
-            items: []
+            items: [],
+            orderData: {
+                pg_id: 1,
+                coupon_id: '',
+                address_id: ''
+            }
+        }
+    },
+    methods: {
+        orderSubmit() {
+            var authStatus = store.getters.GET_AUTH_STATUS;
+            if (authStatus) {
+                this.$store.dispatch('ORDER_SUBMIT', this.orderData)
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            }
         }
     },
     mounted() {

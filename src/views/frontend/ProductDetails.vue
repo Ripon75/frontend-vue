@@ -214,9 +214,9 @@ export default {
                 this.$store.dispatch('CART_ITEM_ADD', this.cartItemData)
                 .then(res => {
                     if (res.data.success) {
-                        this.showNotification('success', res.data.msg)
+                        this._showNotification('success', res.data.msg)
                     } else {
-                        this.showNotification('warning', res.data.msg)
+                        this._showNotification('warning', res.data.msg)
                     }
                     this.isLoading = false
                 })

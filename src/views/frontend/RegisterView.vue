@@ -80,7 +80,7 @@ export default {
             this.$store.dispatch('REGISTER', this.form)
             .then(res => {
                 if (res.data.success) {
-                    this.showNotification('success', res.data.msg);
+                    this._showNotification('success', res.data.msg);
                     this.$router.push({name: 'login'});
                     this.isLoading = false;
                 } else {

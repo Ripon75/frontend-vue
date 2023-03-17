@@ -15,6 +15,7 @@
                                 <th>Size</th>
                                 <th>Color</th>
                                 <th>Price</th>
+                                <th>S.Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
                                 <th>Remove</th>
@@ -28,6 +29,7 @@
                                 </td>
                                 <td class="align-middle">{{ sizes[index].name }}</td>
                                 <td class="align-middle">{{ colors[index].name }}</td>
+                                <td class="align-middle">{{ item.pivot.price }}</td>
                                 <td class="align-middle">{{ item.pivot.sell_price }}</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -45,7 +47,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle">{{ item.pivot.total_price }}</td>
+                                <td class="align-middle">{{ item.pivot.total_sell_price }}</td>
                                 <td class="align-middle">
                                     <button class="btn btn-sm btn-primary" @click="removedItem(index)">
                                         <i class="fa fa-times"></i>
@@ -142,15 +144,14 @@ export default {
                     item.pivot.quantity--;
                 }
             }
-            item.pivot.total_price = item.pivot.selling_price * item.pivot.quantity;
+            item.pivot.total_sell_price = item.pivot.sell_price * item.pivot.quantity;
             var cartItemData = {
                 item_id: item.id,
                 quantity: item.pivot.quantity,
                 size_id: item.pivot.size_id,
                 color_id: item.pivot.color_id,
-                selling_price: item.pivot.selling_price
+                sell_price: item.pivot.sell_price
             }
-
             return cartItemData;
         },
         updapteQty(cartItemData) {
@@ -182,7 +183,7 @@ export default {
     // Calculate cart item total price
     totalPrice() {
       return this.items.reduce((total, item) => {
-        return total + parseFloat(item.pivot.total_price);
+        return total + parseFloat(item.pivot.total_sell_price);
       }, 0);
     },
   },

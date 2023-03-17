@@ -62,7 +62,7 @@ export default {
             this.$store.dispatch('LOGIN', this.form)
             .then(res => {
                 if (res.data.success) {
-                    this.showNotification('success', res.data.msg);
+                    this._showNotification('success', res.data.msg);
                     this.$router.push({name: 'home'});
                     this.isLoading = false;
                 } else {

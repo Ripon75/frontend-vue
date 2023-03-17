@@ -19,8 +19,10 @@ export const cart = {
         UPDATE_CART_ITEM(state, payload) {
             if (payload === 'plus') {
                 state.cart_items = state.cart_items + 1;
-            }else {
+            }else if (payload === 'minus') {
                 state.cart_items = state.cart_items - 1;
+            } else {
+                state.cart_items = 0;
             }
         }
     },
@@ -91,12 +93,12 @@ export const cart = {
                 axios.post('remove/cart/items', payload)
                 .then(res => {
                     if (res.data.success) {
-                        context.commit('UPDATE_CART_ITEM', 1)
+                        context.commit('UPDATE_CART_ITEM', 'minus');
                     }
-                    resolve(res)
+                    resolve(res);
                 })
                 .catch(err => {
-                    reject(err)
+                    reject(err);
                 })
             })
         },
@@ -106,10 +108,13 @@ export const cart = {
             return new Promise((resolve, reject) => {
                 axios.post('orders/submit', payload)
                 .then(res => {
-                    resolve(res)
+                    if (res.data.success) {
+                        context.commit('UPDATE_CART_ITEM', 'empty');
+                    }
+                    resolve(res);
                 })
                 .catch(err => {
-                    reject(err)
+                    reject(err);
                 })
             })
         }

@@ -17,7 +17,7 @@ app.provide('$myGlobalVar', 'Hello, World!');
 app.config.globalProperties.currency = globals.currency
 
 // Global function for notification
-app.config.globalProperties.showNotification = (type, message) => {
+app.config.globalProperties._showNotification = (type, message) => {
   globals.toastFire(type, message)
 }
 

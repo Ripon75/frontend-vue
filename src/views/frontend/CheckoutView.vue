@@ -11,14 +11,14 @@
                     <div class="mb-4">
                         <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
                         <div class="row">
-                            <input type="radio" class="ml-2 mr-2">
+                            <input type="radio" class="ml-2 mr-2" :value='1' v-model="orderData.address_id">
                             <div class="col-md-5 form-group border border-success">
                                 <span>Home</span> <br>
                                 <span>Dhaka-Bangladesh</span> <br>
                                 <span>Ramna</span> <br>
                                 <span>+8801764997485</span> <br>
                             </div>
-                            <input type="radio" class="ml-2 mr-2">
+                            <input type="radio" class="ml-2 mr-2" :value='2' v-model="orderData.address_id">
                             <div class="col-md-5 form-group border border-success">
                                 <span>Home</span> <br>
                                 <span>Dhaka-Bangladesh</span> <br>
@@ -111,8 +111,8 @@
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
                             <div class="d-flex justify-content-between mt-2">
-                                <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold">{{ currency }} {{ totalPrice + 10 }}</h5>
+                                <h5 class="font-weight-medium">Total</h5>
+                                <h5 class="font-weight-medium">{{ currency }} {{ totalPrice + 10 }}</h5>
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,8 @@
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
-                            <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" @click="orderSubmit">
+                            <button class="btn btn-lg btn-block btn-primary font-weight-medium py-2" :disabled="isLoading" @click="orderSubmit">
+                                <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
                                 Place Order
                             </button>
                         </div>
@@ -161,23 +162,32 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             items: [],
             orderData: {
                 pg_id: 1,
                 coupon_id: '',
-                address_id: ''
+                address_id: 1
             }
         }
     },
     methods: {
         orderSubmit() {
+            this.isLoading = true
             var authStatus = store.getters.GET_AUTH_STATUS;
             if (authStatus) {
                 this.$store.dispatch('ORDER_SUBMIT', this.orderData)
                 .then(res => {
-                    console.log(res);
+                    if (res.data.success) {
+                        this._showNotification('success', res.data.msg);
+                        this.items = [];
+                    } else {
+                        this._showNotification('error', res.data.msg);
+                    }
+                    this.isLoading = false
                 })
                 .catch(err => {
+                    this.isLoading = false
                     console.log(err);
                 });
             }

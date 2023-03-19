@@ -96,8 +96,8 @@
                                 <h5 class="font-weight-medium mb-3">Price</h5>
                             </div>
                             <div v-for="(item, index) in items" :key="index" class="d-flex justify-content-between">
-                                <p>{{ item.name }} ({{ item.pivot.quantity }})</p>
-                                <p>{{ currency }} {{ item.pivot.total_price }}</p>
+                                <p>{{ item.name }} ({{ sizes[index].name }}) ({{ colors[index].name }}) ({{ item.pivot.quantity }})</p>
+                                <p>{{ currency }} {{ item.pivot.total_sell_price }}</p>
                             </div>
                             <hr class="mt-0">
                             <div class="d-flex justify-content-between mb-3 pt-1">
@@ -106,13 +106,13 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">{{ currency }} 10</h6>
+                                <h6 class="font-weight-medium">{{ currency }} 30.00</h6>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5 class="font-weight-medium">Total</h5>
-                                <h5 class="font-weight-medium">{{ currency }} {{ totalPrice + 10 }}</h5>
+                                <h5 class="font-weight-medium">{{ currency }} {{ (+totalPrice + 30).toFixed(2) }}</h5>
                             </div>
                         </div>
                     </div>
@@ -164,6 +164,8 @@ export default {
         return {
             isLoading: false,
             items: [],
+            sizes: [],
+            colors: [],
             orderData: {
                 pg_id: 1,
                 coupon_id: '',
@@ -201,6 +203,8 @@ export default {
             .then(res => {
                 if (res.data.success) {
                     this.items = res.data.result.items;
+                    this.sizes = res.data.result.sizes;
+                    this.colors = res.data.result.colors;
                 }
             })
             .catch(err => {
@@ -211,9 +215,10 @@ export default {
     computed: {
         // Calculate cart item total price
         totalPrice() {
-        return this.items.reduce((total, item) => {
-            return total + parseFloat(item.pivot.total_price);
+        var totalSellPrice =  this.items.reduce((total, item) => {
+            return total + parseFloat(item.pivot.total_sell_price);
         }, 0);
+        return totalSellPrice.toFixed(2);
         },
     },
 }

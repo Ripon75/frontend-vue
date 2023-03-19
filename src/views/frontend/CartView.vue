@@ -73,17 +73,17 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3 pt-1">
                                 <h6 class="font-weight-medium">Subtotal</h6>
-                                <h6 class="font-weight-medium">{{ currency }} {{ totalPrice }}</h6>
+                                <h6 class="font-weight-medium">{{ currency }} {{ totalSellPrice }}</h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">{{ currency }} 10</h6>
+                                <h6 class="font-weight-medium">{{ currency }} 30.00</h6>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
                             <div class="d-flex justify-content-between mt-2">
-                                <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold">{{ currency }} {{ totalPrice + 10 }}</h5>
+                                <h5 class="font-weight-medium">Total</h5>
+                                <h5 class="font-weight-medium">{{ currency }} {{ (+totalSellPrice + 30).toFixed(2) }}</h5>
                             </div>
                             <router-link :to="{name: 'checkout'}" class="btn btn-block btn-primary my-3 py-3">
                                 Proceed To Checkout
@@ -109,7 +109,7 @@ export default {
             isLoading: false,
             items: [],
             sizes: [],
-            colors: [],
+            colors: []
         }
     },
     methods: {
@@ -144,13 +144,13 @@ export default {
                     item.pivot.quantity--;
                 }
             }
-            item.pivot.total_sell_price = item.pivot.sell_price * item.pivot.quantity;
+            var totalSellPrice = item.pivot.sell_price * item.pivot.quantity;
+            item.pivot.total_sell_price = totalSellPrice.toFixed(2);
             var cartItemData = {
                 item_id: item.id,
                 quantity: item.pivot.quantity,
                 size_id: item.pivot.size_id,
-                color_id: item.pivot.color_id,
-                sell_price: item.pivot.sell_price
+                color_id: item.pivot.color_id
             }
             return cartItemData;
         },
@@ -181,10 +181,11 @@ export default {
     },
    computed: {
     // Calculate cart item total price
-    totalPrice() {
-      return this.items.reduce((total, item) => {
+    totalSellPrice() {
+      var totalSellPrice =  this.items.reduce((total, item) => {
         return total + parseFloat(item.pivot.total_sell_price);
       }, 0);
+      return totalSellPrice.toFixed(2); 
     },
   },
 }

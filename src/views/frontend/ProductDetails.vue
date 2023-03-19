@@ -38,9 +38,11 @@
                         <small class="pt-1">(50 Reviews)</small>
                     </div>
                     <div class="d-flex">
-                        <h4 class="font-weight-semi-bold mb-4">Tk {{ product.price }}</h4>
-                            <span class="text-muted ml-2 mt-1"><del v-if="product.offer_price != 0">
-                                {{ product.offer_price }}
+                        <h4 class="font-weight-semi-bold mb-4" v-if="product.offer_price != 0">Tk {{ product.offer_price }}</h4>
+                        <h4 class="font-weight-semi-bold mb-4" v-else>Tk {{ product.price }}</h4>
+                            <span class="text-muted ml-2 mt-1">
+                                <del v-if="product.offer_price != 0">
+                                    {{ product.price }}
                                 </del>
                             </span>
                     </div>

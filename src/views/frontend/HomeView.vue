@@ -11,7 +11,7 @@
 
 
     <!-- Offer Start -->
-    <div class="container-fluid offer pt-5">
+    <!-- <div class="container-fluid offer pt-5">
         <div class="row px-xl-5">
             <div class="col-md-6 pb-4">
                 <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Offer End -->
 
 
@@ -50,8 +50,7 @@
                 :slug="product.slug"
                 :img_src="product.img_src"
                 :price="product.price"
-                :offer_price="product.offer_price"
-                >
+                :offer_price="product.offer_price">
             </ProductComponent>
         </div>
     </div>
@@ -59,7 +58,7 @@
 
 
     <!-- Subscribe Start -->
-    <div class="container-fluid bg-secondary my-5">
+    <!-- <div class="container-fluid bg-secondary my-5">
         <div class="row justify-content-md-center py-5 px-xl-5">
             <div class="col-md-6 col-12 py-5">
                 <div class="text-center mb-2 pb-2">
@@ -77,7 +76,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Subscribe End -->
 
 
@@ -93,8 +92,7 @@
                 :slug="product.slug"
                 :img_src="product.img_src"
                 :price="product.price"
-                :promo_price="product.promo_price"
-                >
+                :offer_price="product.offer_price">
             </ProductComponent>
         </div>
     </div>

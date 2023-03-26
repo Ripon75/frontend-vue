@@ -146,7 +146,7 @@
                 <!-- Products Product Start -->
                 <div class="col-lg-9 col-md-12">
                     <div class="row pb-3">
-                        <ProductComponent v-for="product in products" :key="product.id"
+                        <ProductComponent v-for="product in products.data" :key="product.id"
                             :id="product.id"
                             :name="product.name"
                             :slug="product.slug"
@@ -158,21 +158,10 @@
                         <div class="col-12 pb-1">
                             <nav aria-label="Page navigation">
                                 <ul class="pagination justify-content-center mb-3">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </li>
+                                    <Bootstrap4Pagination
+                                        :data="products"
+                                        @pagination-change-page="getProducts"
+                                    />
                                 </ul>
                             </nav>
                         </div>
@@ -187,28 +176,38 @@
 <script>
 import PageHeader from '@/components/frontend/PageHeader.vue';
 import ProductComponent from '../../components/frontend/ProductComponent.vue'
+import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 export default {
     components: {
         PageHeader,
-        ProductComponent
+        ProductComponent,
+        Bootstrap4Pagination
     },
     data() {
         return {
-        products: []
+            products: []
+        }
+    },
+    methods: {
+        getProducts(page = 1) {
+            var params = {
+                page: page,
+                pagination: true,
+                pagination_size: 4
+            }
+            this.$store.dispatch('PRODUCTS', params)
+            .then(res => {
+                if (res.data.success) {
+                    this.products = res.data.result;
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
     },
     mounted() {
-        this.$store.dispatch('PRODUCTS')
-        .then(res => {
-            console.log(res);
-            if (res.data.success) {
-                var products = res.data.result.data;
-                this.products = products;
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        this.getProducts();
     },
 }
 </script>
